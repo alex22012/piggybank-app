@@ -13,6 +13,12 @@ class AreaPix extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: const Text("Área PIX"),
+          leading: BackButton(
+            color: const Color(0xFFFFFFFF),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
         body: Column(
           children: <Widget>[

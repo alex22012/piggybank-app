@@ -1,23 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:piggybank/screens/area_pix.dart';
+import 'package:piggybank/screens/deposito.dart';
 import 'package:piggybank/screens/lista_transferencias.dart';
 import 'package:piggybank/screens/new_transfer.dart';
 
 class BotoesAcaoConta extends StatelessWidget {
-  const BotoesAcaoConta({Key? key}) : super(key: key);
+  Function cbRefreshBalance;
+  BotoesAcaoConta(this.cbRefreshBalance, {Key? key}) : super(key: key);
   void goToTransferList(BuildContext context) {
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => ListaTransferencias()));
   }
 
-  void goToNewTransfer(BuildContext context) {
-    Navigator.push(
+  void goToNewTransfer(BuildContext context) async {
+    var result = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => const NewTransfer()));
+    if (result) {
+      cbRefreshBalance();
+    }
   }
 
   void goToAreaPIX(BuildContext context) {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const AreaPix()));
+  }
+
+  void goToDeposito(BuildContext context) async {
+    var result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Deposito()));
+    if (result) {
+      cbRefreshBalance();
+    }
   }
 
   @override
@@ -29,7 +42,7 @@ class BotoesAcaoConta extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.3,
+            width: MediaQuery.of(context).size.width * 0.2,
             height: 100,
             child: ElevatedButton(
               onPressed: () {
@@ -39,7 +52,7 @@ class BotoesAcaoConta extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.3,
+            width: MediaQuery.of(context).size.width * 0.2,
             height: 100,
             child: ElevatedButton(
               onPressed: () {
@@ -49,13 +62,23 @@ class BotoesAcaoConta extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.3,
+            width: MediaQuery.of(context).size.width * 0.2,
             height: 100,
             child: ElevatedButton(
               onPressed: () {
                 goToAreaPIX(context);
               },
               child: const Text("Área PIX"),
+            ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.2,
+            height: 100,
+            child: ElevatedButton(
+              onPressed: () {
+                goToDeposito(context);
+              },
+              child: const Text("Depositar"),
             ),
           ),
         ],
