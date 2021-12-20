@@ -5,14 +5,15 @@ import 'package:piggybank/services/api.dart';
 
 void main() async {
   runApp(const Main());
-  var resp = await API.getTransfers(1);
-  print(resp.body);
 }
 
 class Main extends StatelessWidget {
   const Main({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Home());
+    return const MaterialApp(
+      home: Home(),
+      debugShowCheckedModeBanner: false,
+    );
   }
 }

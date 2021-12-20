@@ -20,7 +20,7 @@ class _DepositoState extends State<Deposito> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     double amount = double.parse(txtValor.text);
     var id = prefs.getInt("userId")!.toInt();
-    var resp = await API.depositar(id, amount, "adicao");
+    var resp = await API.depositar(id, "", amount, "adicao");
     Navigator.pop(context, true);
   }
 

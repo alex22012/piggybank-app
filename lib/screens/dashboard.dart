@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:piggybank/classes/account.dart';
 import 'package:piggybank/components/botoes_acao_conta.dart';
+import 'package:piggybank/screens/contacts.dart';
+import 'package:piggybank/screens/home.dart';
 import 'package:piggybank/services/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,11 +50,46 @@ class _DashBoardState extends State<DashBoard> {
       home: Scaffold(
         appBar: AppBar(
           title: const Text("Bem vindo"),
-          actions: const [
+          actions: [
             IconButton(
-              icon: Icon(Icons.show_chart_outlined),
-              onPressed: null,
-            )
+              icon: const Icon(Icons.exit_to_app),
+              onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.remove("userId");
+                await prefs.remove("account");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Home()));
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.account_box),
+              onPressed: () async {
+                bool result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Contacts(),
+                  ),
+                );
+                if (result) {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title:
+                              Text("A transferência foi enviada com sucesso"),
+                          actions: [
+                            ElevatedButton(
+                                onPressed: () {
+                                  getAccount();
+                                  Navigator.pop(context, false);
+                                },
+                                child: const Text("Confirmar"))
+                          ],
+                        );
+                      });
+                }
+              },
+            ),
           ],
         ),
         body: Column(
@@ -70,7 +107,7 @@ class _DashBoardState extends State<DashBoard> {
                       ),
                 title: const Text("Saldo disponível na sua conta"),
                 subtitle: moneyIsVisible == true
-                    ? Text(conta.balance.toString())
+                    ? Text(conta.balance.toStringAsFixed(2))
                     : const Text("Seu dinheiro está na barriga do porquinho"),
               ),
             ),

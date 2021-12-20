@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:piggybank/screens/pix_qr_code.dart';
 
 class AcoesPixReceber extends StatelessWidget {
   const AcoesPixReceber({Key? key}) : super(key: key);
@@ -14,13 +15,16 @@ class AcoesPixReceber extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const <Widget>[
+            children: <Widget>[
               IconButton(
                 tooltip: "Cobrar",
-                onPressed: null,
-                icon: Icon(Icons.monetization_on),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PixQrCode()));
+                },
+                icon: const Icon(Icons.monetization_on),
               ),
-              Text("Cobrar"),
+              const Text("Cobrar"),
             ],
           ),
         ),

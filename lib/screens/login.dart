@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:piggybank/classes/account.dart';
 import 'package:piggybank/components/shared/textinput.dart';
 import 'package:piggybank/screens/dashboard.dart';
 import 'package:piggybank/services/api.dart';
+import 'package:piggybank/services/controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
@@ -24,7 +28,15 @@ class _LoginState extends State<Login> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setInt("userId", int.parse(resp.body));
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => DashBoard()));
+          context, MaterialPageRoute(builder: (context) => const DashBoard()));
+    } else {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return const AlertDialog(
+                title: Text("Login falhou"),
+                content: Text("Verifique os dados informados"));
+          });
     }
   }
 

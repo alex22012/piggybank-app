@@ -16,13 +16,24 @@ class BotoesAcaoConta extends StatelessWidget {
     var result = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => const NewTransfer()));
     if (result) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return (const AlertDialog(
+              title: Text("Tranferência realizada com sucesso"),
+              content: Text("O valor será creditado na conta de destino"),
+            ));
+          });
       cbRefreshBalance();
     }
   }
 
-  void goToAreaPIX(BuildContext context) {
-    Navigator.push(
+  void goToAreaPIX(BuildContext context) async {
+    var result = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => const AreaPix()));
+    if (result) {
+      cbRefreshBalance();
+    }
   }
 
   void goToDeposito(BuildContext context) async {

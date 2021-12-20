@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:piggybank/screens/pagamento_pix.dart';
 
 class AcoesPixEnviar extends StatelessWidget {
   const AcoesPixEnviar({Key? key}) : super(key: key);
@@ -14,13 +15,25 @@ class AcoesPixEnviar extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const <Widget>[
+            children: <Widget>[
               IconButton(
                 tooltip: "Pagar",
-                onPressed: null,
-                icon: Icon(Icons.payments_outlined),
+                onPressed: () async {
+                  bool resp = await Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PagamentoPix()));
+                  if (resp) {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return (const AlertDialog(
+                            title: Text("Pix enviado com sucesso"),
+                          ));
+                        });
+                  }
+                },
+                icon: const Icon(Icons.payments_outlined),
               ),
-              Text("Pagar"),
+              const Text("Pagar"),
             ],
           ),
         ),
